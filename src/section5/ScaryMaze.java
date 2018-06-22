@@ -1,4 +1,6 @@
+
 package section5;
+
 
 import java.applet.AudioClip;
 import java.awt.Dimension;
@@ -17,21 +19,23 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class ScaryMaze extends JPanel implements Runnable, MouseMotionListener {
+	int backgroundColor=-1;
+	int startColor=-65279;
+	int endColor=-16712192;
 	
-	BufferedImage maze;
 	final int frameWidth = 800;
 	final int frameHeight = 600;
-
+BufferedImage maze;
 	ScaryMaze() throws Exception {
 		//1. Use this online tool to make a maze image and drop it into your section5 package: http://pixlr.com/editor/
-		//maze = ImageIO.read(getClass().getResource("standardMaze.jpg"));
+		maze = ImageIO.read(getClass().getResource("maze.jpg"));
 		//2. Change the line of code above so that it matches your maze's file name
 		
 		//3. Set the mouse pointer to the start of your maze using:
-		//new Robot().mouseMove(45, 95);
+		new Robot().mouseMove(115, 80);
 		
 		//4. Add a mouse motion listener using:
-		//addMouseMotionListener(this);
+		addMouseMotionListener(this);
 		
 	}
 
@@ -41,12 +45,17 @@ public class ScaryMaze extends JPanel implements Runnable, MouseMotionListener {
 		int mouseY = e.getY();
 		int mouseColor = maze.getRGB(mouseX, mouseY);
 		//5. Print the mouseColor variable 
-		
+		System.out.println(mouseColor);
 		//6.  Run your program and put your mouse over the background to find out what color it is
 		
 		//7. Create an int variable that holds the background color. 
 		
 		//8. If the mouse falls off the path (if it is on the background)
+	if (mouseColor==backgroundColor) {
+		scare();
+		
+		
+	}
 	
 				// call the scare method
 		
@@ -61,18 +70,19 @@ public class ScaryMaze extends JPanel implements Runnable, MouseMotionListener {
 		//9. Find a scary sound and put it in the section5 package where you put your maze picture. You can find a sound on freesound.org. Log in as leagueofamazing/code4life.
 		
 		//10. Use the code below to load your sound.  Change the file name to match the name of your sound file.  
-		//AudioClip sound = JApplet.newAudioClip(getClass().getResource("standardScarySound.wav"));
+		AudioClip sound = JApplet.newAudioClip(getClass().getResource("scream.wav"));
 		
 		//11. Play the scary sound. Hint: type "sound" and then a period.		
-		
+		sound.play();
 		//12. Drop an image into your section5 package, and use the showScaryImage method to scare your victim!
-		
+		showScaryImage();
 	}
 
 	private void showScaryImage(String imageName) {
 		try {
 			maze = ImageIO.read(getClass().getResource(imageName));
-		} catch (Exception e) {
+		}
+		 catch (Exception e) {
 			System.err.println("Couldn't find this image: " + imageName);
 		}
 		repaint();
